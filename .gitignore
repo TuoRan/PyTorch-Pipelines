@@ -1,0 +1,62 @@
+# ----------------------------
+# Python
+# ----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env
+.venv
+venv/
+ENV/
+
+# Conda
+conda-env/
+*.conda
+
+# ----------------------------
+# Jupyter
+# ----------------------------
+.ipynb_checkpoints/
+
+# ----------------------------
+# PyTorch / ML artifacts
+# ----------------------------
+checkpoints/
+/models/
+weights/
+*.pt
+*.pth
+*.ckpt
+
+# ----------------------------
+# Experiment outputs
+# ----------------------------
+runs/
+logs/
+*.log
+*.csv
+*.json
+
+# ----------------------------
+# Data
+# ----------------------------
+/data/
+datasets/
+raw_data/
+processed_data/
+
+# ----------------------------
+# OS / IDE
+# ----------------------------
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# ----------------------------
+# Misc
+# ----------------------------
+.tmp/
+.cache/

@@ -6,38 +6,35 @@ from torch.utils.data import DataLoader, TensorDataset
 from src.utils.device import get_device
 from src.utils.seed import set_seed
 from src.training.loops import train_one_epoch, evaluate
-
+from src.models.vision.simple_cnn import SimpleCNN
+from src.data.vision import get_cifar10_loaders
 
 def main():
     set_seed(123)
     device, info = get_device()
     print("Device:", info)
 
-    # Tiny fake classification dataset
-    X = torch.randn(256, 3, 32, 32)
-    y = torch.randint(0, 10, (256,))
+    # Fake classification dataset
+    # X = torch.randn(256, 3, 32, 32)
+    # y = torch.randint(0, 10, (256,))
 
-    train_loader = DataLoader(TensorDataset(X, y), batch_size=64, shuffle=True)
-    test_loader = DataLoader(TensorDataset(X, y), batch_size=64, shuffle=False)
+    # train_loader = DataLoader(TensorDataset(X, y), batch_size=64, shuffle=True)
+    # test_loader = DataLoader(TensorDataset(X, y), batch_size=64, shuffle=False)
+    train_loader, test_loader = get_cifar10_loaders(64, 3)
 
-    # Tiny model that matches CIFAR-like shape
-    model = nn.Sequential(
-        nn.Flatten(),
-        nn.Linear(3 * 32 * 32, 64),
-        nn.ReLU(),
-        nn.Linear(64, 10),
-    ).to(device)
+    # Define model
+    model = SimpleCNN(num_classes=10).to(device)
 
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
 
     # Check params change after training
-    before = model[1].weight.detach().clone()
+    before = model.convblock1[0].weight.detach().clone()
 
     train_loss = train_one_epoch(model, optimizer, criterion, train_loader, device)
     test_loss = evaluate(model, criterion, test_loader, device)
 
-    after = model[1].weight.detach().clone()
+    after = model.convblock1[0].weight.detach().clone()
 
     print(f"train_loss: {train_loss:.4f} | test_loss: {test_loss:.4f}")
     print("params_changed:", not torch.equal(before, after))

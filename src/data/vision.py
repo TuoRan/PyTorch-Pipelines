@@ -1,3 +1,4 @@
+# src/data/vision.py
 import torch
 from torchvision import datasets
 import torchvision.transforms.v2 as transforms
@@ -8,12 +9,16 @@ def get_cifar10_loaders(batch_size, num_workers):
         transforms.Pad(padding=4),
         transforms.RandomCrop(size=(32, 32)),
         transforms.RandomHorizontalFlip(p=0.3),
-        transforms.ToTensor(),
+        # transforms.ToTensor(), 
+        transforms.ToImage(), 
+        transforms.ToDtype(torch.float32, scale=True),
         transforms.Normalize((0.491, 0.482, 0.447), (0.247, 0.243, 0.262))
     ])
 
     test_transform = transforms.Compose([
-        transforms.ToTensor(),
+        # transforms.ToTensor(),
+        transforms.ToImage(), 
+        transforms.ToDtype(torch.float32, scale=True),
         transforms.Normalize((0.491, 0.482, 0.447), (0.247, 0.243, 0.262))
     ])
 

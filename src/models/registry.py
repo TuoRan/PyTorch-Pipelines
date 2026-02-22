@@ -1,23 +1,25 @@
 # src/models/registry.py
 from __future__ import annotations
-from typing import Callable, Dict, List, Optional, Type, Union
+from typing import Dict, List, Optional, Type, Union
 import torch
 import torch.nn as nn
 
 from src.models.vision.simple_cnn import SimpleCNN
 from src.models.vision.resnet.resnet18 import ResNet18
-
+from src.models.text.text_mlp import TextMLP
 
 # Models registry data
 _REGISTRY: Dict[str, Type[nn.Module]] = {
     "simple_cnn": SimpleCNN,
     "resnet18": ResNet18,
+    "text_mlp": TextMLP
 }
 
 # Optional aliases so users can type shorter names without guessing.
 _ALIASES: Dict[str, str] = {
     "resnet": "resnet18",
     "cnn": "simple_cnn",
+    "text": "text_mlp"
 }
 
 

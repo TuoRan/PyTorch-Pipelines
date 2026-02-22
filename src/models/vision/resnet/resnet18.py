@@ -4,7 +4,7 @@ from src.models.vision.resnet.basic_block import BasicBlock
 
 # Define ResNet-18 architecture using BasicBlock layers
 class ResNet18(nn.Module):
-    def __init__(self, num_classes: int):
+    def __init__(self):
         super(ResNet18, self).__init__()
         self.conv1 = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=3, padding=1, bias=False)
         self.in_channels = 64
@@ -18,7 +18,7 @@ class ResNet18(nn.Module):
 
         self.avgpool = nn.AdaptiveAvgPool2d((1,1))
         self.flatten = nn.Flatten()
-        self.fc = nn.Linear(in_features=512, out_features=num_classes)
+        self.fc = nn.Linear(in_features=512, out_features=10)
 
     # Define method to create BasicBlock layers with possible downsampling and deeper representations
     # First block handles resolution & channel changes

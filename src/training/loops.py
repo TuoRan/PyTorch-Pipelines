@@ -101,7 +101,7 @@ def fit(
 
         print_metrics(metrics)
 
-        # Write metrics after every epoch (crash-safe)
+        # Write metrics after every epoch
         if run_dir is not None:
             save_json(
                 os.path.join(run_dir, "metrics.json"),
@@ -121,13 +121,13 @@ def fit(
                 model=model,
                 optimizer=optimizer,
                 epoch=epoch_idx,
-                best_val_acc=best_test_acc,  # keep your helper name; it's just a float
-                config=extra_ckpt_data or {},  # or pass your real config dict
+                best_val_acc=best_test_acc,
+                config=extra_ckpt_data or {},
             )
 
     # Save last checkpoint
     if run_dir is not None and save_last:
-        # ensure best fields are sensible even if save_best=False
+        # ensure best fields are sensible
         if best_epoch == -1 and history:
             best_test_acc = float(history[-1]["test_acc"])
             best_epoch = int(history[-1]["epoch"])

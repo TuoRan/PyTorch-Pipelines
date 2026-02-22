@@ -2,7 +2,7 @@
 import torch.nn as nn
 
 class SimpleCNN(nn.Module):
-    def __init__(self, num_classes: int, dropout_p: float):
+    def __init__(self, dropout_p: float):
         super(SimpleCNN, self).__init__()
 
         self.convblock1 = nn.Sequential(
@@ -24,7 +24,7 @@ class SimpleCNN(nn.Module):
         self.avgpool = nn.AdaptiveAvgPool2d((1,1))
         self.dropout = nn.Dropout(p=float(dropout_p))
         self.flatten = nn.Flatten()
-        self.linear = nn.Linear(in_features=128, out_features=num_classes)
+        self.linear = nn.Linear(in_features=128, out_features=10)
 
     def forward(self, x):
         out = self.convblock1(x)
